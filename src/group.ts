@@ -1,4 +1,4 @@
-import { Map } from "mapbox-gl";
+import mapboxgl, { Map } from "mapbox-gl";
 import type { AnyLayer } from 'mapbox-gl';
 import { assign } from 'lodash-es';
 
@@ -26,7 +26,7 @@ declare module 'mapbox-gl' {
     }
 }
 
-Map.prototype.addLayerGroup = function(id: string, layers: AnyLayer[], beforeId: string) {
+mapboxgl.Map.prototype.addLayerGroup = Map.prototype.addLayerGroup = function(id: string, layers: AnyLayer[], beforeId: string) {
     var beforeLayerId = normalizeBeforeId(this, beforeId);
     for (var i = 0; i < layers.length; i++) {
         this.addLayerToGroup(id, layers[i], beforeLayerId, true);

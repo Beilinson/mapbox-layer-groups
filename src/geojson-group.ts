@@ -10,12 +10,17 @@ export type GeoJsonGroup = {
     minzoom?: number;
     maxzoom?: number;
     interactive?: boolean;
-    layout: CircleLayout & FillLayout & LineLayout;
+    layout?: CircleLayout & FillLayout & LineLayout;
     paint?: CirclePaint & OutlinedFillPaint & LinePaint;
 };
 
 export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
-  const { source, id, paint, metadata, interactive, minzoom, maxzoom } = group;
+  let { source, id, paint, metadata, interactive, minzoom, maxzoom } = group;
+  if (minzoom === undefined) minzoom = 0;
+  if (maxzoom === undefined) maxzoom = 20;
+  if (interactive === undefined) interactive = false;
+  if (metadata === undefined) metadata = {};
+  if (paint === undefined) paint = {};
   const layers: Layer[] = [
     {
       id: `${id}-fill`,
@@ -34,6 +39,10 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       source,
       filter: ['==', '$type', 'Polygon'],
       paint: paint && convertFillOutlineToLine(filterObject(OUTLINED_FILL_PROPS, paint)),
+      metadata,
+      interactive,
+      minzoom,
+      maxzoom,
     },
     {
       id: `${id}-line`,
@@ -41,6 +50,10 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       source,
       filter: ['==', '$type', 'LineString'],
       paint: paint && filterObject(LINE_PROPS, paint),
+      metadata,
+      interactive,
+      minzoom,
+      maxzoom,
     },
     {
       id: `${id}-point`,
@@ -48,6 +61,10 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       source,
       filter: ['all', ['==', '$type', 'Point'], ['!has', 'point_count']],
       paint: paint && filterObject(CIRCLE_PROPS, paint),
+      metadata,
+      interactive,
+      minzoom,
+      maxzoom,
     },
   ];
   return layers;
