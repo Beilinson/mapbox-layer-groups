@@ -1,6 +1,6 @@
 {
   "name": "mapbox-layer-groups",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A library for managing groups of layers in mapbox",
   "type": "module",
   "main": "dist/mapbox-layer-groups.min.js",

@@ -4,14 +4,14 @@ import { CIRCLE_PROPS, FILL_PROPS, LINE_PROPS, OUTLINED_FILL_PROPS } from './typ
 import { convertFillOutlineToLine, filterObject } from './utils';
 
 export type GeoJsonGroup = {
-    id: string;
-    metadata?: any;
-    source: string | AnySourceData;
-    minzoom?: number;
-    maxzoom?: number;
-    interactive?: boolean;
-    layout?: CircleLayout & FillLayout & LineLayout;
-    paint?: CirclePaint & OutlinedFillPaint & LinePaint;
+  id: string;
+  metadata?: any;
+  source: string | AnySourceData;
+  minzoom?: number;
+  maxzoom?: number;
+  interactive?: boolean;
+  layout?: CircleLayout & FillLayout & LineLayout;
+  paint?: CirclePaint & OutlinedFillPaint & LinePaint;
 };
 
 export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
