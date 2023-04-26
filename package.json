@@ -1,0 +1,54 @@
+{
+  "name": "mapbox-layer-groups",
+  "version": "0.0.1",
+  "description": "A library for managing groups of layers in mapbox",
+  "type": "module",
+  "main": "dist/mapbox-layer-groups.min.js",
+  "module": "lib/mapbox-layer-groups.js",
+  "typings": "lib/mapbox-layer-groups.d.ts",
+  "types": "lib/mapbox-layer-groups.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && tsc && rollup -c rollup.config.js",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Beilinson/mapbox-layer-groups.git"
+  },
+  "files": [
+    "src",
+    "lib",
+    "dist"
+  ],
+  "keywords": [
+    "mapbox",
+    "gl",
+    "js",
+    "layer",
+    "group",
+    "geojson"
+  ],
+  "author": "Adam Beili <adam.v.beili@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Beilinson/mapbox-layer-groups/issues"
+  },
+  "homepage": "https://github.com/Beilinson/mapbox-layer-groups#readme",
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.7",
+    "@types/mapbox-gl": "^2.7.10",
+    "mapbox-gl": "2.x",
+    "rimraf": "^5.0.0",
+    "rollup": "^3.21.0",
+    "rollup-plugin-dts": "^5.3.0",
+    "tslib": "^2.5.0",
+    "typescript": "^5.0.4"
+  },
+  "peerDependencies": {
+    "mapbox-gl": "2.x"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  }
+}
