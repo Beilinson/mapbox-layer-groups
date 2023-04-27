@@ -3,6 +3,13 @@ import type { OutlinedFillPaint } from './types/fill-outline';
 import { CIRCLE_PROPS, FILL_PROPS, LINE_PROPS, OUTLINED_FILL_PROPS } from './types/paint-props';
 import { convertFillOutlineToLine, filterObject } from './utils';
 
+export type LayersOptions<T> = {
+  fill?: T;
+  fillOutline: T;
+  line?: T;
+  circle?: T;
+}
+
 export type GeoJsonGroup = {
   id: string;
   metadata?: any;
@@ -12,10 +19,11 @@ export type GeoJsonGroup = {
   interactive?: boolean;
   layout?: CircleLayout & FillLayout & LineLayout;
   paint?: CirclePaint & OutlinedFillPaint & LinePaint;
+  filters?: LayersOptions<any[]>;
 };
 
 export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
-  let { source, id, paint, metadata, interactive, minzoom, maxzoom } = group;
+  let { source, id, paint, metadata, interactive, minzoom, maxzoom, filters } = group;
   if (minzoom === undefined) minzoom = 0;
   if (maxzoom === undefined) maxzoom = 20;
   if (interactive === undefined) interactive = false;
@@ -26,7 +34,7 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       id: `${id}-fill`,
       type: 'fill',
       source,
-      filter: ['==', '$type', 'Polygon'],
+      filter: filters?.fill ?? ['==', '$type', 'Polygon'],
       paint: paint && filterObject(FILL_PROPS, paint),
       metadata,
       interactive,
@@ -37,7 +45,7 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       id: `${id}-fill-outline`,
       type: 'line',
       source,
-      filter: ['==', '$type', 'Polygon'],
+      filter: filters?.fillOutline ?? ['==', '$type', 'Polygon'],
       paint: paint && convertFillOutlineToLine(filterObject(OUTLINED_FILL_PROPS, paint)),
       metadata,
       interactive,
@@ -48,7 +56,7 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       id: `${id}-line`,
       type: 'line',
       source,
-      filter: ['==', '$type', 'LineString'],
+      filter: filters?.line ?? ['==', '$type', 'LineString'],
       paint: paint && filterObject(LINE_PROPS, paint),
       metadata,
       interactive,
@@ -59,7 +67,7 @@ export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
       id: `${id}-point`,
       type: 'circle',
       source,
-      filter: ['all', ['==', '$type', 'Point'], ['!has', 'point_count']],
+      filter: filters?.circle ?? ['==', '$type', 'Point'],
       paint: paint && filterObject(CIRCLE_PROPS, paint),
       metadata,
       interactive,

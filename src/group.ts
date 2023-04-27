@@ -125,7 +125,7 @@ export function getGroupLastLayerId(map: Map, id: string) {
 function getGroupFirstLayerIndex(map: Map, id: string) {
   var layers = map.getStyle().layers;
   for (var i = 0; i < layers.length; i++) {
-    if (layers[i].metadata.group === id) return i;
+    if (layers[i].metadata?.group === id) return i;
   }
   return -1;
 }
@@ -134,7 +134,7 @@ function getGroupLastLayerIndex(map: Map, id: string) {
   var layers = map.getStyle().layers;
   var i = getGroupFirstLayerIndex(map, id);
   if (i === -1) return -1;
-  while (i < layers.length && (layers[i].id === id || layers[i].metadata.group === id)) i++;
+  while (i < layers.length && (layers[i].id === id || layers[i].metadata?.group === id)) i++;
   return i - 1;
 }
 
@@ -145,7 +145,7 @@ function getLayerIdFromIndex(map: Map, index: number) {
 }
 
 function getLayerGroup(map: Map, id: string) {
-  return map.getLayer(id).metadata.group;
+  return map.getLayer(id).metadata?.group;
 }
 
 function normalizeBeforeId(map: Map, beforeId: string) {
