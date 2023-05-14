@@ -1,19 +1,19 @@
-import type { AnySourceData, CircleLayout, CirclePaint, FillLayout, Layer, LineLayout, LinePaint } from 'mapbox-gl';
+import type { AnySourceData, CircleLayout, CirclePaint, FillLayout, AnyLayer, LineLayout, LinePaint } from 'mapbox-gl';
 import type { OutlinedFillPaint } from './types/fill-outline';
 import { CIRCLE_PROPS, FILL_PROPS, LINE_PROPS, OUTLINED_FILL_PROPS } from './types/paint-props';
 import { convertFillOutlineToLine, filterObject } from './utils';
 
 export type LayersOptions<T> = {
   fill?: T;
-  fillOutline: T;
+  fillOutline?: T;
   line?: T;
   circle?: T;
-}
+};
 
 export type GeoJsonGroup = {
   id: string;
-  metadata?: any;
   source: string | AnySourceData;
+  metadata?: any;
   minzoom?: number;
   maxzoom?: number;
   interactive?: boolean;
@@ -22,14 +22,14 @@ export type GeoJsonGroup = {
   filters?: LayersOptions<any[]>;
 };
 
-export function createGeoJsonGroup(group: GeoJsonGroup): Layer[] {
+export function createGeoJsonGroup(group: GeoJsonGroup): AnyLayer[] {
   let { source, id, paint, metadata, interactive, minzoom, maxzoom, filters } = group;
   if (minzoom === undefined) minzoom = 0;
   if (maxzoom === undefined) maxzoom = 20;
   if (interactive === undefined) interactive = false;
   if (metadata === undefined) metadata = {};
   if (paint === undefined) paint = {};
-  const layers: Layer[] = [
+  const layers: AnyLayer[] = [
     {
       id: `${id}-fill`,
       type: 'fill',
